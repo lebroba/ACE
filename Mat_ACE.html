@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
+	<title>Material ACE</title>
+
+	<!-- CSS  -->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link href="dist/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
+	<link href="dist/css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
+</head>
+
+<body>
+
+	<div class="container">
+
+
+
+
+		<div class="row">
+
+			<div class="col s8 m8 l8" id="board">
+
+
+				<div class="card black hilite-border">
+					<div class="card-content white-text" id="map" name="map">
+						<div class="top-left">
+							<table class="table">
+								<tbody>
+									<tr>
+										<td><span class="blue">SoA</span> &nbsp;
+
+										</td>
+
+										<td><span class="RO" id="soaRO">0 
+
+kts</span>
+										</td>
+									</tr>
+
+
+									<tr>
+										<td><span class="blue">SoI</span> &nbsp;
+
+										</td>
+
+										<td><span class="RO" id="soiRO">0 
+
+kts</span>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+
+						<div class="top-right">
+							<table class="table">
+								<tbody>
+									<tr>
+										<td><span class="RO" id="staRO">0 
+
+kts</span>
+										</td>
+
+										<td>&nbsp;<span class="red">StA</span>
+										</td>
+									</tr>
+
+
+									<tr>
+										<td><span class="RO" id="stiRO">0 
+
+kts</span>
+										</td>
+
+										<td>&nbsp;<span class="red">StI</span>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+						<div class="bottom grey-text" id="timer">
+							<h4><span>Scenario Time</span>
+							</h4>
+
+
+							<h1><span id='timerText'>00:00:00</span>
+							</h1>
+						</div>
+
+
+					</div>
+				</div>
+
+
+			</div>
+
+			<!-- End of Game Board -->
+			<div class="col s4 m4 l4">
+				<div class="card black hilite-border style-4" id="tgtSumHolder">
+					<div class="card-content white-text">
+
+						<table>
+							<thead>
+								<tr>
+									<th>Time</th>
+
+									<th>BRG</th>
+
+									<th>RNG</th>
+
+									<th>CRS</th>
+
+									<th>SPD</th>
+
+									<th>F<span class="sub">R</span>
+									</th>
+
+									<th>F<span class="sub">C</span>
+									</th>
+								</tr>
+							</thead>
+
+
+							<tbody id="tgtSum">
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="card black hilite-border">
+
+					
+				</div>
+
+				<div class="card black">
+
+					<a class="waves-effect waves-light btn square" id="playBtn"><img class="medium material-icons  icon" src="dist/svg/ic_play_arrow_white_48px.svg"></a>
+					<a class="waves-effect waves-light btn square" onclick="pauseScenario()"><img class="medium material-icons  icon" src="dist/svg/ic_pause_white_48px.svg"></a>
+					<a class="waves-effect waves-light btn square"><img class="medium material-icons  icon" src="dist/svg/ic_stop_white_48px.svg"></a>
+					<a class="waves-effect waves-light btn square" href="#modal1"><img class="medium material-icons  icon kiwi" src="dist/svg/ic_settings_white_48px.svg"></a>
+
+				</div>
+
+			</div>
+
+
+			<!-- Input modal -->
+			<div id="modal1" class="modal bottom-sheet">
+				<div class="modal-content">
+	<form>
+							<div class="row col s2 m2 l2">
+								<h6>Ship Controls</h6>
+								<div class="input-field">
+									<!-- <input type="number" name="osCRS" id="osCRS" step="1" 
+
+pattern="[0-9]*" min="0" max="360" class="validate" aria-label="..." tabindex="1" required> -->
+
+									<input type="number" name="osCRS" id="osCRS" step="1" pattern="[0
+
+-9]*" min="0" max="360" class="" aria-label="..." tabindex="1" required value="200">
+
+									<label for="oCRS">Own Ship Course</label>
+								</div>
+
+								<div class="input-field">
+									<input type="number" name="osSPD" id="osSPD" step="1" pattern="[0
+
+-9]*" min="0" max="60" class="validate" aria-label="..." tabindex="2" required value="16">
+									<label for="oSPD">Own Ship Speed</label>
+								</div>
+
+							</div>
+
+							<div class="row col s2 m2 l2">
+								<h6>&nbsp;</h6>
+								<div class="input-field">
+									<!-- <input type="number" name="osCRS" id="osCRS" step="1" 
+
+pattern="[0-9]*" min="0" max="360" class="validate" aria-label="..." tabindex="1" required> -->
+
+									<input type="number" name="pRNG" id="pRNG" step="1" pattern="[0
+
+-9]*" min="0" max="120" class="" aria-label="..." tabindex="3" required value="60">
+
+									<label for="pRNG">Passive Range</label>
+								</div>
+
+								<div class="input-field">
+									<input type="number" name="aRNG" id="aRNG" step="1" pattern="[0-9]*" min="0" max="80" class="validate" aria-label="..." tabindex="4" required value="60">
+									<label for="aRNG">Active Range</label>
+								</div>
+
+							</div>
+
+
+							<div class="row col s2 m2 l2">
+								<h6>Target Controls</h6>
+								<div class="input-field">
+									<input type="number" name="tCRS" id="tCRS" step="1" pattern="[0-9]*" min="0" max="360" class="validate" aria-label="..." tabindex="5" required value="25">
+
+									<label for="tCRS">Target Course</label>
+
+								</div>
+								<div class="input-field">
+									<input type="number" name="tSPD" id="tSPD" step="1" pattern="[0-9]*" min="0" max="60" class="validate" aria-label="..." tabindex="6" required value="8">
+									<label for="tSPD">Target Speed</label>
+
+								</div>
+								
+										<div class="input-field">
+									<input type="number" name="freq" id="freq" step="1" pattern="[0-9]*" min="0" max="60" class="validate" aria-label="..." tabindex="6" required value="490">
+									<label for="freq">Tracking Frequency</label>
+
+								</div>
+							</div>
+
+							<div class="row col s2 m2 l2">
+								<h6>&nbsp;</h6>
+								<div class="input-field">
+									<input type="number" name="brg" id="brg" step="1" pattern="[0-9]*" min="0" max="360" class="validate" aria-label="..." tabindex="7" required value="69">
+									<label for="brg">Bearing</label>
+
+								</div>
+								<div class="input-field">
+									<input type="number" name="rng" id="rng" pattern="[0-9]*" min="0" max="600000" class="validate" aria-label="..." tabindex="8" required value="22">
+									<label for="rng">Range</label>
+								</div>
+							</div>
+
+						</form>
+
+
+				</div>
+				<div class="modal-footer bottom">
+					<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">ACCEPT</a>
+				</div>
+			</div>
+
+
+
+			<!-- End of side bar Div -->
+		</div>
+
+
+
+
+
+		<!-- End of Row -->
+	</div>
+	<!-- End of Section -->
+
+
+
+
+	<!--  Scripts-->
+	<script src="dist/js/jquery.js"></script>
+	<script src="dist/js/materialize.js"></script>
+	<script src="dist/js/raphael-min.js"></script>
+	<script src="dist/js/ace.js"></script>
+	<script src="dist/js/init.js"></script>
+	<script src="dist/js/tma.js"></script>
+
+</body>
+
+</html>

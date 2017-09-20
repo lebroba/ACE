@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
+	<title>Material SLBr</title>
+
+	<!-- CSS  -->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link href="dist/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
+	<link href="dist/css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
+</head>
+
+<body>
+
+	<div class="container">
+		<div class="section">
+
+			<!--   Icon Section   -->
+			<div class="row">
+				<div class="col s12 m9">
+
+
+					<div class="card black hilite-border">
+						<div class="card-content white-text">
+							<span class="card-title">User Inputs</span>
+							<form>
+								<div class="row">
+									<div class="input-field col s6">
+										<!-- <input type="number" name="osCRS" id="osCRS" step="1" pattern="[0-9]*" min="0" max="360" class="validate" aria-label="..." tabindex="1" required> -->
+
+										<input type="number" name="osCRS" id="osCRS" step="1" pattern="[0-9]*" min="0" max="360" class="" aria-label="..." tabindex="1" required>
+
+										<label for="oCRS">Own Ship Course</label>
+									</div>
+
+									<div class="input-field col s6">
+										<input type="number" name="osSPD" id="osSPD" step="1" pattern="[0-9]*" min="0" max="60" class="validate" aria-label="..." tabindex="2" required>
+										<label for="oSPD">Own Ship Speed</label>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="input-field col s6">
+										<input type="number" name="lOS" id="lOS" step="1" pattern="[0-9]*" min="0" max="360" class="validate" aria-label="..." tabindex="3" required>
+										<label for="los">Line of Sound</label>
+
+									</div>
+									<div class="input-field col s6">
+										<input type="number" name="bRate" id="bRate" step=".1" pattern="[0-9]*" min="0" max="60" class="validate" aria-label="..." tabindex="4" required>
+										<label for="bRate">Bearing Rate</label>
+
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="input-field col s6">
+										<input type="number" name="tSPD" id="tSPD" step="1" pattern="[0-9]*" min="0" max="60" class="validate" aria-label="..." tabindex="5" required>
+										<label for="tSPD">Target Speed</label>
+
+									</div>
+
+									<div class="input-field col s6">
+										<input type="number" name="tCRS" id="tCRS" step="1" pattern="[0-9]*" min="0" max="360" class="validate" aria-label="..." tabindex="6" required>
+
+										<label for="tCRS">Target Course</label>
+
+									</div>
+								</div>
+
+
+
+							</form>
+						</div>
+					</div>
+
+					<!-- Eval Plot -->
+					<div class="card black hilite-border">
+						<div class="card-content white-text" name="holder" id="holder">
+							<span class="card-title">Eval Plot</span>
+							<svg id="evalsvg"></svg>
+						</div>
+					</div>
+				</div>
+
+				<div class="col s12 m6">
+					<div class="card black" id="mobo">
+						<svg id="mobosvg"></svg>
+
+						<!--Speed Component Read outs -->
+						<!-- Own Ship -->
+						<div class="top-left">
+							<table class="table">
+								<tbody>
+									<tr>
+										<td><span class="blue-text">SoA</span> &nbsp;</td>
+										<td><span class="RO" id="soaRO">0 kts</span></td>
+									</tr>
+									<tr>
+										<td><span class="blue-text">SoI</span> &nbsp;</td>
+										<td><span class="RO" id="soiRO">0 kts</span></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<!-- Target -->
+						<div class="top-right">
+							<table class="table">
+								<tbody>
+									<tr>
+										<td><span class="RO" id="staRO">0 kts</span></td>
+										<td>&nbsp;<span class="red-text">StA</span></td>
+									</tr>
+									<tr>
+										<td><span class="RO" id="stiRO">0 kts</span></td>
+										<td>&nbsp;<span class="red-text">StI</span></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+						<!-- Relative -->
+						<div class="bottom-left">
+							<table class="table">
+								<tbody>
+									<tr>
+										<td>&nbsp;<span class="green-text">SrA</span></td>
+										<td><span class="RO" id="sraRO">0</span> kts</td>
+									</tr>
+									<tr>
+										<td>&nbsp;<span class="green-text">SrI</span></td>
+										<td><span class="RO" id="sriRO">0</span> kts</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+						<div class="bottom-right">
+							<div class="square btn">
+								<span id="twoOne">2:1</span> | <span id="fiveOne">5:1</span>
+								<!-- Switch -->
+								<div class="switch">
+									<label>	
+      									<input type="checkbox" id="ratio">
+      										<span class="lever"></span>
+     
+    								</label>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<!--<a class="waves-effect waves-light btn modal-trigger" href="#modal1">1</a>-->
+					<a class="waves-effect waves-light btn modal-trigger" href="#modal2">LEAD</a>
+					<a class="waves-effect waves-light btn modal-trigger" href="#modal3">OVERLEAD</a>
+					<a class="waves-effect waves-light btn modal-trigger" href="#modal4">LAG</a>
+					<a class="waves-effect waves-light btn modal-trigger" href="#modal5">ZBR</a>
+					<a class="waves-effect waves-light btn modal-trigger" href="#modal6">POINTING</a>
+					<a class="waves-effect waves-light btn modal-trigger" href="#modal7">NTA</a>
+					<!--<a class="waves-effect waves-light btn modal-trigger" href="#modal8">8</a>-->
+
+				</div>
+
+				<div class="col s12 m3">
+
+					<div class="card black hilite-border">
+						<div class="card-content white-text">
+							<span class="card-title">SLB Range</span>
+							<span id="slbRange" class="readout2">00000</span><span class="sm"> Yards</span>
+						</div>
+					</div>
+
+					<div class="card black hilite-border">
+						<div class="row card-content white-text">
+							<div class="col s12 m6 l6">
+								<span class="RO readout" id="closure">OPENING</span>
+							</div>
+							<div class="col s12 m6 l6">
+								<span class="RO readout" id="losGeo">OVERLEAD</span>
+
+							</div>
+						</div>
+
+
+					</div>
+
+					<div class="card black hilite-border">
+
+						<div class="row card-content white-text">
+							<div class="col s12 m4 l4">
+								<span class="readout" id="minRNG">00000</span><br />
+								<span class="sm">Minimum Range</span>
+							</div>
+							<div class="col s12 m4 l4">
+								<span class="readout" id="maxRNG">00000</span><br />
+								<span class="sm">Maximum Range</span>
+							</div>
+							<div class="col s12 m4 l4">
+								<span class="readout" id="estRNG">00000</span><br />
+								<span class="sm">Estimated Range</span>
+							</div>
+						</div>
+					</div>
+
+					<div class="card black hilite-border">
+
+						<div class="row card-content white-text">
+							<div class="col s12 m4 l6">
+								<span class="readout" id="relBRG">000&deg;</span><br />
+								<span class="sm">Relative Bearing</span>
+							</div>
+							<div class="col s12 m4 l6">
+								<span class="readout" id="repBRG">000&deg;</span><br />
+								<span class="sm">Reciprocal Bearing</span>
+							</div>
+							<div class="col s12 m4 l12">
+								<span class="readout" id="relativePosition">Port Quarter</span><br />
+								<span class="sm">Relative Position</span>
+							</div>
+						</div>
+
+
+
+
+					</div>
+
+					<div class="card black hilite-border">
+
+						<div class="row card-content white-text">
+							<div class="col s12 m4 l4">
+								<span class="readout" id="tmrPrint">0</span>
+							</div>
+							<div class="col s12 m4 l4">
+								<span class="readout" id="omrPrint">0</span>
+							</div>
+							<div class="col s12 m4 l4">
+								<span class="readout" id="stabPrint">0</span>
+							</div>
+						</div>
+						<div class="row card-content white-text">
+							<div class="col s12 m4 l4">
+								<span class="sm">Three minute<br />Rule</span>
+							</div>
+							<div class="col s12 m4 l4">
+								<span class="sm">One minute <br />Rule</span>
+							</div>
+							<div class="col s12 m4 l4">
+								<span class="sm">Towed array <br />stabilization time</span>
+							</div>
+						</div>
+					</div>
+					<div class="card black">
+						<a class="square waves-effect waves-dark btn" href="#modal8">
+							<img class="icon" src="dist/svg/ic_settings_white_48px.svg">
+						</a>
+						<a class="square waves-effect waves-dark btn modal-trigger" href="#modal1">
+							<img class="icon" src="dist/svg/ic_list_white_48px.svg">
+						</a>
+
+						<a class="square waves-effect waves-dark btn" id="plusbtn">
+							<img class="icon" src="dist/svg/ic_playlist_add_white_48px.svg">
+						</a>
+
+						<a class="square waves-effect waves-dark btn" onClick="toggleFullScreen();">
+							<img class="icon" src="dist/svg/ic_settings_overscan_white_48px.svg">
+						</a>
+
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<br><br>
+
+		<!-- Modal Structure -->
+		<div id="modal1" class="modal bottom-sheet">
+			<div class="modal-content">
+				<h4>TMA HISTORY</h4>
+				<table class="table">
+					<thead>
+						<tr>
+							<th colspan="1"><span class="">-</span></th>
+							<th colspan="1">C<sub>O</sub></th>
+							<th colspan="1">S<sub>O</sub></th>
+							<th colspan="1">LOS</th>
+							<th colspan="1">B. Rate</th>
+							<th colspan="1">C<sub>T</sub></th>
+							<th colspan="1">S<sub>T</sub></th>
+							<th colspan="1">Geometry</th>
+							<th colspan="1">Range</th>
+						</tr>
+					</thead>
+					<tbody id="history">
+					</tbody>
+				</table>
+			</div>
+			<div class="modal-footer">
+				<a class="waves-effect waves-light btn plusbtn" id="plusbtn"><img src="dist/svg/ic_add_circle_outline_white_24px.svg" id="plusbtn">ADD LEG</a>
+				<a class="waves-effect waves-light btn minusbtn"><img src="dist/svg/ic_close_white_24px.svg">DELETE LEG</a>
+				<a href="#!" class="modal-action modal-close waves-effect waves-light btn"><img src="dist/svg/ic_cancel_white_24px.svg">CLOSE</a>
+			</div>
+		</div>
+
+		<!-- Modal Structure -->
+		<div id="modal2" class="modal modal-fixed-footer">
+			<div class="modal-content">
+
+				<div class="row">
+
+					<div class="col s4">
+						<img class="responsive-img" src="dist/svg/lead.svg" alt="Lead Geometry" />
+					</div>
+
+					<div class="col s8">
+						<h4>LEAD</h4>
+						<ul class="list-group">
+							<li class="list-group-item">Provides direction of contact motion (right or left) without ambiguity.</li>
+							<li class="list-group-item">Provides maximum range for assumed contact speed.</li>
+							<li class="list-group-item">Provides minimum target speed, which is own-ship speed across the los.</li>
+							<li class="list-group-item">Bearings always drift forward relative to own ship.</li>
+						</ul>
+					</div>
+
+				</div>
+			</div>
+			<div class="modal-footer">
+				<a href="#!" class="modal-action modal-close waves-effect waves-light btn"><img src="dist/svg/ic_cancel_white_24px.svg">CLOSE</a>
+			</div>
+		</div>
+
+
+		<!-- Modal Structure -->
+		<div id="modal3" class="modal modal-fixed-footer">
+			<div class="modal-content">
+
+				<div class="row">
+
+					<div class="col s4">
+						<img class="responsive-img" src="dist/svg/overlead.svg" alt="Overlead" />
+					</div>
+
+					<div class="col s8">
+						<h4>OVERLEAD</h4>
+						<ul class="list-group">
+							<li class="list-group-item">Provides absolute maximum range.</li>
+							<li class="list-group-item">Unable to determine direction of contact motion without additional information.</li>
+							<li class="list-group-item">Bearings always drift aft relative to own ship.</li>
+							<li class="list-group-item">Provides minimum range for assumed contact speed.</li>
+						</ul>
+					</div>
+
+				</div>
+			</div>
+			<div class="modal-footer">
+				<a href="#!" class="modal-action modal-close waves-effect waves-light btn"><img src="dist/svg/ic_cancel_white_24px.svg">CLOSE</a>
+			</div>
+		</div>
+
+		<!-- Modal Structure -->
+		<div id="modal4" class="modal modal-fixed-footer">
+			<div class="modal-content">
+
+				<div class="row">
+
+					<div class="col s4">
+						<img class="responsive-img" src="dist/svg/lag.svg" alt="Lag Geometery" />
+					</div>
+
+					<div class="col s8">
+						<ul class="list-group">
+							<h4>LAG</h4>
+							<li class="list-group-item">Provides absolute minimum range.</li>
+							<li class="list-group-item">Unable to determine direction of contact motion without additional information.</li>
+							<li class="list-group-item">Generally, the los with the highest bearing rate.</li>
+							<li class="list-group-item">Bearings always drift aft relative to own ship.</li>
+							<li class="list-group-item">Provides maximum range for assumed contact speed.</li>
+						</ul>
+					</div>
+
+				</div>
+			</div>
+			<div class="modal-footer">
+				<a href="#!" class="modal-action modal-close waves-effect waves-light btn"><img src="dist/svg/ic_cancel_white_24px.svg">CLOSE</a>
+			</div>
+		</div>
+
+		<!-- Modal Structure -->
+		<div id="modal5" class="modal modal-fixed-footer">
+			<div class="modal-content">
+				<div class="row">
+
+					<div class="col s4">
+						<img class="responsive-img" src="dist/svg/zbr.svg" alt="ZBR" />
+					</div>
+
+					<div class="col s8">
+						<h4>ZERO BEARING RATE</h4>
+						<ul class="list-group">
+							<li class="list-group-item">Provides S<sub>T</sub>A and Minimum Target Speed.</li>
+							<li class="list-group-item">Provides direction of contact motion.</li>
+							<li class="list-group-item">Potential for Speiss Range</li>
+						</ul>
+					</div>
+
+				</div>
+			</div>
+			<div class="modal-footer">
+				<a href="#!" class="modal-action modal-close waves-effect waves-light btn"><img src="dist/svg/ic_cancel_white_24px.svg">CLOSE</a>
+			</div>
+		</div>
+
+		<!-- Modal Structure -->
+		<div id="modal6" class="modal modal-fixed-footer">
+			<div class="modal-content">
+				<div class="row">
+
+					<div class="col s4">
+						<img class="responsive-img" src="dist/svg/pointing.svg" alt="Pointing Geometry" />
+					</div>
+
+					<div class="col s8">
+						<h4>POINTING</h4>
+						<ul class="list-group">
+							<li class="list-group-item">Provides S<sub>T</sub>A and Minimum Target Speed.</li>
+							<li class="list-group-item">Provides direction of contact motion.</li>
+							<li class="list-group-item">Potential for Speiss Range</li>
+						</ul>
+					</div>
+
+				</div>
+			</div>
+			<div class="modal-footer">
+				<a href="#!" class="modal-action modal-close waves-effect waves-light btn"><img src="dist/svg/ic_cancel_white_24px.svg">CLOSE</a>
+			</div>
+		</div>
+
+		<!-- Narrow Target Aspect -->
+		<div id="modal7" class="modal modal-fixed-footer">
+			<div class="modal-content">
+				<div class="row">
+
+					<div class="col s4">
+						<img class="responsive-img" src="dist/svg/nta.svg" alt="NTA" />
+					</div>
+
+					<div class="col s8">
+						<h4>NARROW TARGET ANGLE</h4>
+						<ul class="list-group">
+							<li class="list-group-item">Bearing lines cross near actual target range.</li>
+							<li class="list-group-item">Special techniques for geographic plot. &#40;Estimated Positions&#41;</li>
+							<li class="list-group-item">Potential for speiss range</li>
+						</ul>
+					</div>
+
+				</div>
+			</div>
+			<div class="modal-footer">
+				<a href="#!" class="modal-action modal-close waves-effect waves-light btn"><img src="dist/svg/ic_cancel_white_24px.svg">CLOSE</a>
+			</div>
+		</div>
+
+		<!-- Settings -->
+		<div id="modal8" class="modal modal-fixed-footer">
+			<div class="modal-content">
+				<div class="row">
+					<h4>Settings</h4>
+					<form class="col s12">
+						<div class="row">
+							<div class="input-field col s6">
+								<input id="psr" type="number" class="validate">
+								<label for="first_name">Predicted Sonar Range</label>
+								<blockquote>
+									Enter the Maximum predicted sonar detection range in yards. This value will be used to calculate target course by working a reverse SLB range.
+								</blockquote>
+
+
+							</div>
+							<div class="input-field col s6">
+								<input placeholder="20000" id="tdz" type="number" class="validate">
+								<label for="last_name">Torpedo Danger Zone</label>
+								<blockquote>
+									Enter the radius of the Torpedo Danger Zone (TDZ) in yards.
+								</blockquote>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="input-field col s6">
+								<input id="cabScope" type="number" class="validate">
+								<label for="first_name">Towed Array Cable Scope</label>
+								<blockquote>
+									Enter towed array cable scope. This affects towed array stabilization time calculations.
+								</blockquote>
+							</div>
+							<div class="input-field col s6">
+								<input id="" type="number" class="validate">
+								<label for="last_name">Place holder</label>
+							</div>
+						</div>
+
+					</form>
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+	<div class="modal-footer">
+		<a href="#!" class="modal-action modal-close waves-effect waves-light btn"><img src="dist/svg/ic_cancel_white_24px.svg">CLOSE</a>
+	</div>
+	</div>
+
+
+
+
+
+	<!-- End of Main COntainer -->
+	</div>
+
+
+	<!--  Scripts-->
+	<script src="dist/js/jquery.js"></script>
+	<script src="dist/js/materialize.js"></script>
+	<script src="dist/js/snap.svg.js"></script>
+	<script src="dist/js/slbr.js"></script>
+	<script src="dist/js/init.js"></script>
+	<script src="dist/js/utils2.js"></script>
+
+</body>
+
+</html>
